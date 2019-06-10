@@ -11,7 +11,7 @@ bam_input_dir=$1
 chr_sizes_file=$2
 custom_bin_size=$3
 
-for treatment_file in $bam_inpu_dir/*picardreorder_validprimary_majchr_picardreorder_dupremoved_*
+for treatment_file in $bam_input_dir/*picardreorder_validprimary_majchr_picardreorder_dupremoved_*
 do
 	sample_type=$(basename $treatment_file | sed 's/_trimgalore_bowtie2_.*$//')
 	SRR_id=$(basename $treatment_file | sed 's/.*_//' | sed ' s/\..*$//')
