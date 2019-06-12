@@ -2,7 +2,6 @@
 
 #SBATCH --nodes 1
 #SBATCH --mem=6gb
-#SBATCH --job-name Liu_hiddenDom_w_ctrl
 #SBATCH --ntasks=1
 #SBATCH --time 03:00:00
 #SBATCH --output slurm_%x_%A_%a.out
