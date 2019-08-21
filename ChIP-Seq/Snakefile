@@ -1,8 +1,8 @@
-fastq_input_dir = "/g/boulard/sformich/galaxy_transfer/H3K4me3_Ren_Snyder/input_data"
+#fastq_input_dir = "/g/boulard/sformich/galaxy_transfer/H3K4me3_Ren_Snyder/input_data"
 
 rule all:
   input:
-    "{fastq_input_dir}/Ren_ChIP_fastqc.html"   
+    "/g/boulard/sformich/galaxy_transfer/H3K4me3_Ren_Snyder/input_data/Ren_ChIP_fastqc.html"   
 
 rule fastqc_my_file:
   input:
