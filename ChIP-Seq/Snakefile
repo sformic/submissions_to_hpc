@@ -1,0 +1,12 @@
+rule all:
+  input:
+    "Ren_ChIP_fastqc.html"   
+
+rule fastqc_my_file:
+  input:
+    "{fastqfile_name}.fastqsanger.gz"
+  output:
+    "{fastqfile_name}_fastqc.html"
+    "{fastqfile_name}_fastqc.txt"
+  shell:
+    "fastqc {input}"
