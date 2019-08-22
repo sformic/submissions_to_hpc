@@ -1,14 +1,18 @@
-fastq_input_dir = "/g/boulard/sformich/galaxy_transfer/H3K4me3_Ren_Snyder/input_data"
+FASTQ_INPUT_DIR = "/g/boulard/sformich/galaxy_transfer/H3K4me3_Ren_Snyder/input_data/"
+OUTPUT_DIR = "/g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/output_files/"
+SAMPLES = "Ren_ChIP.fastqsanger"
 
 rule all:
   input:
-    "{fastq_input_dir}/Ren_ChIP_fastqc.html"   
+    expand("{path}{sample}_fastqc.html", path=OUTPUT_DIR, sample=SAMPLES)
 
 rule fastqc_my_file:
   input:
-    "{fastq_input_dir}/{fastqfile_name}.fastqsanger.gz"
+    expand("{path}{{fastq_name}}.gz", path=FASTQ_INPUT_DIR)
+  params:
+    output_dir=OUTPUT_DIR
   output:
-    "{fastqfile_name}_fastqc.html"
-    "{fastqfile_name}_fastqc.txt"
+    expand("{path}{{fastq_name}}_fastqc.html", path=OUTPUT_DIR)
+	#expand("{path}{{fastq_name}}_fastqc.zip", path=OUTPUT_DIR)
   shell:
-    "fastqc {input}"
+    "fastqc -o {params.output_dir} {input}"
