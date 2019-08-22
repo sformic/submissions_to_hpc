@@ -16,3 +16,4 @@ rule fastqc_my_file:
 	#expand("{path}{{fastq_name}}_fastqc.zip", path=OUTPUT_DIR)
   shell:
     "fastqc -o {params.output_dir} {input}"
+
