@@ -1,0 +1,28 @@
+FASTQ_INPUT_DIR = "/g/boulard/sformich/galaxy_transfer/H3K4me3_Ren_Snyder/input_data/"
+OUTPUT_DIR = "/g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/output_files/"
+SAMPLES = "Ren_ChIP_small.fastqsanger"
+
+rule all:
+  input:
+    expand("{path}{sample}_fastqc.html", path=OUTPUT_DIR, sample=SAMPLES),
+    expand("{path}{sample}_trimmed.fq.gz", path=OUTPUT_DIR, sample=SAMPLES)
+
+rule fastqc_my_fastq:
+  input:
+    expand("{path}{{fastq_name}}.gz", path=FASTQ_INPUT_DIR)
+  params:
+    output_dir=OUTPUT_DIR
+  output:
+    expand("{path}{{fastq_name}}_fastqc.{ext}", path=OUTPUT_DIR, ext=["html", "zip"])
+  shell:
+    "fastqc -o {params.output_dir} {input}"
+
+rule trimgalore_my_fastq:
+  input:
+     expand("{path}{{fastq_name}}.gz", path=FASTQ_INPUT_DIR)
+  output:
+    expand("{path}{{fastq_name}}_trimmed.fq.gz", path=OUTPUT_DIR)
+  params:
+    output_dir=OUTPUT_DIR
+  shell:
+    "trim_galore -q 20 --stringency 1 -e 0.1 --length 20 --fastqc --basename {wildcards.fastq_name} -o {params.output_dir} {input}"

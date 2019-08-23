@@ -1,0 +1,20 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	fastqc_my_fastq
+	1	trimgalore_my_fastq
+	3
+
+[Fri Aug 23 12:20:56 2019]
+rule trimgalore_my_fastq:
+    input: /g/boulard/sformich/galaxy_transfer/H3K4me3_Ren_Snyder/input_data/Ren_ChIP_small.fastqsanger.gz
+    output: /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/output_files/Ren_ChIP_small.fastqsanger_trimmed.fq.gz
+    jobid: 2
+    wildcards: fastq_name=Ren_ChIP_small.fastqsanger
+
+RuleException in line 20 of /g/boulard/sformich/submissions_to_hpc/snakemake/ChIPSeq_1/Snakefile:
+NameError: The name 'fastq_name' is unknown in this context. Please make sure that you defined that variable. Also note that braces not used for variable access have to be escaped by repeating them, i.e. {{print $1}}

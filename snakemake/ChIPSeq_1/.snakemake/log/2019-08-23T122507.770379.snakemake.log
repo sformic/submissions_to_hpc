@@ -1,0 +1,26 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	fastqc_my_fastq
+	1	trimgalore_my_fastq
+	3
+
+[Fri Aug 23 12:25:07 2019]
+rule trimgalore_my_fastq:
+    input: /g/boulard/sformich/galaxy_transfer/H3K4me3_Ren_Snyder/input_data/Ren_ChIP_small.fastqsanger.gz
+    output: /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/output_files/Ren_ChIP_small.fastqsanger_trimmed.fq.gz
+    jobid: 2
+    wildcards: fastq_name=Ren_ChIP_small.fastqsanger
+
+Waiting at most 5 seconds for missing files.
+MissingOutputException in line 20 of /g/boulard/sformich/submissions_to_hpc/snakemake/ChIPSeq_1/Snakefile:
+Missing files after 5 seconds:
+/g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/output_files/Ren_ChIP_small.fastqsanger_trimmed.fq.gz
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /g/boulard/sformich/submissions_to_hpc/snakemake/ChIPSeq_1/.snakemake/log/2019-08-23T122507.770379.snakemake.log

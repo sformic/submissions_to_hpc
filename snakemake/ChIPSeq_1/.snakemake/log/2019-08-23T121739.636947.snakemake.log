@@ -1,0 +1,2 @@
+SyntaxError in line 8 of /g/boulard/sformich/submissions_to_hpc/snakemake/ChIPSeq_1/Snakefile:
+Unexpected keyword expand in rule definition (Snakefile, line 8)

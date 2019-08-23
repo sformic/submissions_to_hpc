@@ -1,0 +1,4 @@
+Building DAG of jobs...
+MissingInputException in line 5 of /g/boulard/sformich/submissions_to_hpc/snakemake/ChIPSeq_1/Snakefile:
+Missing input files for rule all:
+/g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/output_files/Ren_ChIP_small.fastqsanger_fastqc.fq.gz

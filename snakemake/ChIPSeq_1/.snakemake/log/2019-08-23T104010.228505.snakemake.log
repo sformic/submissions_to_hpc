@@ -1,0 +1,28 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	trimgalore_my_fastq
+	2
+
+[Fri Aug 23 10:40:10 2019]
+rule trimgalore_my_fastq:
+    input: /g/boulard/sformich/galaxy_transfer/H3K4me3_Ren_Snyder/input_data/Ren_ChIP.fastqsanger.gz
+    output: /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/output_files/Ren_ChIP.fastqsanger_trimmed.fq.gz
+    jobid: 1
+    wildcards: fastq_name=Ren_ChIP.fastqsanger
+
+[Fri Aug 23 10:40:10 2019]
+Error in rule trimgalore_my_fastq:
+    jobid: 1
+    output: /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/output_files/Ren_ChIP.fastqsanger_trimmed.fq.gz
+    shell:
+        trim_galore -q 20 -s 1 -e 0.1 --length 20 bp --fastqc --basename {fastq_name} -o /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/output_files/ /g/boulard/sformich/galaxy_transfer/H3K4me3_Ren_Snyder/input_data/Ren_ChIP.fastqsanger.gz
+        (exited with non-zero exit code)
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /g/boulard/sformich/submissions_to_hpc/snakemake/ChIPSeq_1/.snakemake/log/2019-08-23T104010.228505.snakemake.log
