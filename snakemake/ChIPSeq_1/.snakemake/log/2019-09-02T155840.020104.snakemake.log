@@ -1,0 +1,21 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	bowtie2_aligned_sorted_bam
+	1	keep_only_maj_chr
+	3
+
+[Mon Sep  2 15:58:40 2019]
+rule bowtie2_aligned_sorted_bam:
+    input: /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/trimmed_reads/Ren_ChIP_small.fastqsanger_trimmed.fq.gz
+    output: /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/bam_files/Ren_ChIP_small.fastqsanger_bowtie2.bam, /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/stats/Ren_ChIP_small.fastqsanger_bowtie2_stats.txt, /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/bam_files/Ren_ChIP_small.fastqsanger_bowtie2_sorted.bam
+    jobid: 3
+    wildcards: fastq_name=Ren_ChIP_small.fastqsanger
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /g/boulard/sformich/submissions_to_hpc/snakemake/ChIPSeq_1/.snakemake/log/2019-09-02T155840.020104.snakemake.log

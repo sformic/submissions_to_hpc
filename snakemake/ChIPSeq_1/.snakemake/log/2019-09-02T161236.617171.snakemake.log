@@ -1,0 +1,30 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	bowtie2_aligned_sorted_bam
+	1	keep_only_maj_chr
+	3
+
+[Mon Sep  2 16:12:36 2019]
+rule bowtie2_aligned_sorted_bam:
+    input: /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/trimmed_reads/Ren_ChIP_small.fastqsanger_trimmed.fq.gz
+    output: /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/bam_files/Ren_ChIP_small.fastqsanger_bowtie2.bam, /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/stats/Ren_ChIP_small.fastqsanger_bowtie2_stats.txt, /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/bam_files/Ren_ChIP_small.fastqsanger_bowtie2_sorted.bam
+    jobid: 3
+    wildcards: fastq_name=Ren_ChIP_small.fastqsanger
+
+Removing temporary output file /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/bam_files/Ren_ChIP_small.fastqsanger_bowtie2.bam.
+[Mon Sep  2 16:12:40 2019]
+Finished job 3.
+1 of 3 steps (33%) done
+
+[Mon Sep  2 16:12:40 2019]
+rule keep_only_maj_chr:
+    input: /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/bam_files/Ren_ChIP_small.fastqsanger_bowtie2_sorted.bam
+    output: /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/bam_files/Ren_ChIP_small.fastqsanger_sorted_maj_chr.bam
+    jobid: 2
+    wildcards: fastq_name=Ren_ChIP_small.fastqsanger
+

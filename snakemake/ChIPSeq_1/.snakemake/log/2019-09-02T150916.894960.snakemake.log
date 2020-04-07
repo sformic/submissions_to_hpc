@@ -1,0 +1,2 @@
+SyntaxError in line 43 of /g/boulard/sformich/submissions_to_hpc/snakemake/ChIPSeq_1/Snakefile:
+Multiple run or shell keywords in rule bowtie2_aligned_sorted_bam. (Snakefile, line 43)

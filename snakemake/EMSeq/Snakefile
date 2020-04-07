@@ -1,0 +1,28 @@
+configfile : "/g/boulard/sformich/analyses/EMSeq_test/config.yaml"
+
+rule all:
+  input:
+    expand("{path}qc/{sample}_fastqc.html", path=config["output_dir"], sample=config["samples"]),
+    expand("{path}bam_files/{{fastq_name}}_maj_chr_picardreordered_duplrem.bam", path=config["output_dir"])
+
+rule fastqc_my_fastq:
+  input:
+    expand("{path}{{fastq_name}}.gz", path=config["fastq_input_dir"])
+  params:
+    output_dir=expand("{path}qc/", path=config["output_dir"])
+  output:
+    expand("{path}qc/{{fastq_name}}_fastqc.{ext}", path=config["output_dir"], ext=["html", "zip"])
+  shell:
+    "fastqc -o {params.output_dir} {input}"
+
+rule trimgalore_my_fastq:
+  input:
+     expand("{path}{{fastq_name}}.gz", path=config["fastq_input_dir"])
+  output:
+    trimmed_fq=expand("{path}trimmed_reads/{{fastq_name}}_trimmed.fq.gz", path=config["output_dir"])
+  params:
+    output_dir=expand("{path}trimmed_reads/", path=config["output_dir"])
+  shell:
+    "trim_galore -q 20 --stringency 1 -e 0.1 --length 20 --fastqc --basename {wildcards.fastq_name} -o {params.output_dir} {input}"
+
+

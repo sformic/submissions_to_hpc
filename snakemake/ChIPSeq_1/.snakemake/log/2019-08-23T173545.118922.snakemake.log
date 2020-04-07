@@ -1,0 +1,30 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	bowtie2_aligned_sorted_bam
+	2
+
+[Fri Aug 23 17:35:45 2019]
+rule bowtie2_aligned_sorted_bam:
+    input: /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/trimmed_reads/Ren_ChIP_small.fastqsanger_trimmed.fq.gz
+    output: /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/bam_files/Ren_ChIP_small.fastqsanger_bowtie2.bam, /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/stats/Ren_ChIP_small.fastqsanger_bowtie2_stats
+    jobid: 2
+    wildcards: fastq_name=Ren_ChIP_small.fastqsanger
+
+[Fri Aug 23 17:35:45 2019]
+Error in rule bowtie2_aligned_sorted_bam:
+    jobid: 2
+    output: /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/bam_files/Ren_ChIP_small.fastqsanger_bowtie2.bam, /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/stats/Ren_ChIP_small.fastqsanger_bowtie2_stats
+    shell:
+        bowtie2 -x /g/funcgen/indices/bowtie2_v2_0_0/m.musculus/mm10/mm10 -U /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/trimmed_reads/Ren_ChIP_small.fastqsanger_trimmed.fq.gz b /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/bam_files/Ren_ChIP_small.fastqsanger_bowtie2.bam --no-unal > /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/stats/Ren_ChIP_small.fastqsanger_bowtie2_stats
+        (exited with non-zero exit code)
+
+Removing output files of failed job bowtie2_aligned_sorted_bam since they might be corrupted:
+/g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/stats/Ren_ChIP_small.fastqsanger_bowtie2_stats
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /g/boulard/sformich/submissions_to_hpc/snakemake/ChIPSeq_1/.snakemake/log/2019-08-23T173545.118922.snakemake.log

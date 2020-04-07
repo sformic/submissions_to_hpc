@@ -1,2 +1,0 @@
-SyntaxError in line 26 of /g/boulard/sformich/submissions_to_hpc/snakemake/ChIPSeq_1/Snakefile:
-Unexpected keyword base_name in rule definition (Snakefile, line 26)

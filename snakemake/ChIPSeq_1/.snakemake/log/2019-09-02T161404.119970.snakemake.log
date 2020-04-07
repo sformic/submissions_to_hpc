@@ -1,0 +1,30 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	keep_only_maj_chr
+	2
+
+[Mon Sep  2 16:14:04 2019]
+rule keep_only_maj_chr:
+    input: /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/bam_files/Ren_ChIP_small.fastqsanger_bowtie2_sorted.bam
+    output: /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/bam_files/Ren_ChIP_small.fastqsanger_sorted_maj_chr.bam
+    jobid: 2
+    wildcards: fastq_name=Ren_ChIP_small.fastqsanger
+
+[Mon Sep  2 16:14:04 2019]
+Error in rule keep_only_maj_chr:
+    jobid: 2
+    output: /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/bam_files/Ren_ChIP_small.fastqsanger_sorted_maj_chr.bam
+    shell:
+        samtools view -b -R chr1 chr2 chr3 chr4 chr5 chr6 chr7 chr8 chr9 chr10 chr11 chr12 chr13 chr14 chr15 chr16 chr17 chr18 chr19 chrX chrY > /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/bam_files/Ren_ChIP_small.fastqsanger_sorted_maj_chr.bam
+        (exited with non-zero exit code)
+
+Removing output files of failed job keep_only_maj_chr since they might be corrupted:
+/g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/bam_files/Ren_ChIP_small.fastqsanger_sorted_maj_chr.bam
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /g/boulard/sformich/submissions_to_hpc/snakemake/ChIPSeq_1/.snakemake/log/2019-09-02T161404.119970.snakemake.log

@@ -2,12 +2,10 @@ channels:
   - bioconda
   - defaults
   - conda-forge
+  - r
 dependencies:
   - trim-galore=0.6.4
   - snakemake=5.5.4
-  - bowtie2=2.3.5
+ #- bowtie2=2.3.5
   - fastqc=0.11.8
-  - samtools=1.9
-  - picard=2.20.7
-  - deeptools=3.3.0
-  - hiddendomains=3.1 
+  - bismark=0.22.3 

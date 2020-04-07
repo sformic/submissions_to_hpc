@@ -1,0 +1,30 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	bowtie2_aligned_sorted_bam
+	2
+
+[Fri Aug 23 17:43:07 2019]
+rule bowtie2_aligned_sorted_bam:
+    input: /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/trimmed_reads/Ren_ChIP_small.fastqsanger_trimmed.fq.gz
+    output: /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/bam_files/Ren_ChIP_small.fastqsanger_bowtie2.bam
+    jobid: 2
+    wildcards: fastq_name=Ren_ChIP_small.fastqsanger
+
+[Fri Aug 23 17:43:10 2019]
+Finished job 2.
+1 of 2 steps (50%) done
+
+[Fri Aug 23 17:43:10 2019]
+localrule all:
+    input: /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/qc/Ren_ChIP_small.fastqsanger_fastqc.html, /g/boulard/sformich/analyses/H3K4me3_Ren_Snyder/bam_files/Ren_ChIP_small.fastqsanger_bowtie2.bam
+    jobid: 0
+
+[Fri Aug 23 17:43:10 2019]
+Finished job 0.
+2 of 2 steps (100%) done
+Complete log: /g/boulard/sformich/submissions_to_hpc/snakemake/ChIPSeq_1/.snakemake/log/2019-08-23T174307.490303.snakemake.log
