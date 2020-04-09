@@ -1,4 +1,4 @@
-# submissions_to_hpc
+# Submissions to EMBL HPC 
 
 ## How to run snakemake pipelines on the EMBL cluster using conda environments
 
