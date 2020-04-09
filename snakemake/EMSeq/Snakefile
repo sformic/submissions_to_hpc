@@ -1,4 +1,5 @@
 configfile : "/g/boulard/sformich/analyses/EMSeq_test/config.yaml"
+singularity : "docker://chronomics/epigenetic_pipeline_bismark:v0.2"
 
 rule all:
   input:

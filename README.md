@@ -1,15 +1,13 @@
 # submissions_to_hpc
 
-TO DO: MAKE IT NICE! i.e. markdown style, with links to the paths in the folder.
+## How to run snakemake pipelines on the EMBL cluster using conda environments
 
-## How I run snakemake pipelines on the EMBL cluster
-
-This section contains the description of the steps I follow to run my snakemake pipelines on the EMBL cluster.
-
-The best is using Conda.
+This section contains the description of the steps I follow to run my snakemake pipelines on the EMBL cluster using conda environments.
 
 0. go on seneca
 1. by default, conda will create environments and download packages in the .conda folder in your home directory --> this would lead your home directory to get full and give an error when trying to create your personal conda environment --> you need to create the file ~/.condarc file containing the following:
+e.g. 
+```
 pkgs_dirs:
   - /g/boulard/sformich/conda/pkgs
 envs_dirs:
@@ -19,32 +17,42 @@ channels:
   - conda-forge
   - r
   - defaults
-2. module spider conda --> load latest conda package Anaconda3/2019.07 with $ module load Anaconda3/2019.07
+```
+2. $ module spider conda --> load latest conda package Anaconda3/2019.07 with $ module load Anaconda3/2019.07
 3. $ conda init bash #to use the 'conda activate' command later #not sure it is necessay anymore with latest conda versions
 4. restart the shell and load conda module again
 5. add the bioconda channel as well as the other channels bioconda depends on. 
-	From bioconda documentation: "It is important to add them in this order so that the priority is set correctly (that is, bioconda is highest priority).
-	The conda-forge channel contains many general-purpose packages not already found in the defaults channel. The r channel contains common R packages used as dependencies for bioconda packages. 
-	In practice:
-	$ conda config --add channels conda-forge
-	$ conda config --add channels defaults
-	Warning: 'defaults' already in 'channels' list, moving to the top
-	$ conda config --add channels r
-	$ conda config --add channels bioconda
 
+* From bioconda documentation: "It is important to add them in this order so that the priority is set correctly (that is, bioconda is highest priority).
+* The conda-forge channel contains many general-purpose packages not already found in the defaults channel. The r channel contains common R packages used as dependencies for bioconda packages. 
+* In practice:
+``` shell
+conda config --add channels conda-forge
+conda config --add channels defaults
+conda config --add channels r
+conda config --add channels bioconda
+```
 UNTIL STEP 5, YOU NEED TO REPEAT THESE STEPS ONLY WHENEVER YOU MAKE CHANGES TO THE ~./.condarc FILE BY ADDING CHANNELS ETC! OTHERWISE, JUST PERFORM STEP 2 AND JUMP TO STEP 6 
 
 6. create a yml file containing the channels and the dependencies your workflow is going to use. In order to find a channel:
-	$ conda search fastqc
+```shell
+conda search fastqc
+```
 7. create the environment using that file, e.g.:
-	$ conda env create --file environment.yml -n smake
-	Once the environment is created, a folder named as the environment will be created --> IF YOU CLOSE AND REOPEN THE SHELL, THE ONLY THING YOU NEED TO DO IS:
-													$ module load Anaconda3/2019.07
-													$ conda activate nameOfTheEnvironment
-													$ cd folderWhereYouHaveSnakefile
-													$ snakemake
+```shell
+conda env create --file environment.yml -n smake
+```
+Once the environment is created, a folder named as the environment will be created --> IF YOU CLOSE AND REOPEN THE SHELL, THE ONLY THING YOU NEED TO DO IS:
+```shell
+module load Anaconda3/2019.07
+conda activate nameOfTheEnvironment
+cd folderWhereYouHaveSnakefile
+snakemake
+```
 8. activate the environment: 
-	$ conda activate smake
+```shell
+conda activate smake
+```
 9. now you can run snakemake in the folder where you have the Snakefile (workflowName/Snakefile)
 10.for R packages:
 
