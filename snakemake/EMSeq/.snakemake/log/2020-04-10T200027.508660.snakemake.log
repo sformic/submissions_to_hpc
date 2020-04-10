@@ -1,0 +1,3 @@
+WildcardError in line 97 of /g/boulard/sformich/submissions_to_hpc/snakemake/EMSeq/Snakefile:
+No values given for wildcard 'sample'.
+  File "/g/boulard/sformich/submissions_to_hpc/snakemake/EMSeq/Snakefile", line 97, in <module>

@@ -1,0 +1,4 @@
+NameError in line 33 of /g/boulard/sformich/submissions_to_hpc/snakemake/EMSeq/Snakefile:
+name 'data' is not defined
+  File "/g/boulard/sformich/submissions_to_hpc/snakemake/EMSeq/Snakefile", line 53, in <module>
+  File "/g/boulard/sformich/submissions_to_hpc/snakemake/EMSeq/Snakefile", line 33, in read_samplesTable

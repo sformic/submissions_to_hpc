@@ -27,14 +27,28 @@ shell.executable("/bin/bash")
 
 experimemt = config["experiment_name"]
 
-def read_samplesTable(inputTable):
-    data = pandas.read_csv(inputTable)
+def read_samplesTable(samplesTable):
+    samplesData = pandas.read_csv(samplesTable)
     # Verify column names
-    if not {'SRR','sample','biol_rep','tech_rep','run','library_layout','read_length'}.issubset(data.columns.values):
-            raise KeyError("The samples file must contain the following named columns: 'SRR','sample','biol_rep','tech_rep','run','library_layout','read_length'")
-    return data
+    if not {'SRR','sample','biol_rep','tech_rep','run','library_layout','read_length'}.issubset(samplesData.columns.values):
+       raise KeyError("The samples file must contain the following named columns: 'SRR','sample','biol_rep','tech_rep','run','library_layout','read_length'")
+    return samplesData
 
-#ADD THIS TO THE RUN SNAKEMAKE COMMAND! configfile : "/g/boulard/sformich/analyses/EMSeq_test/config.yaml"
+######################
+# Config Variables
+######################
+
+try:
+  input_samples_table = config["input_samples_table"]
+except KeyError:
+    print("The parameter \"input_samples_table\" has not been defined in the configfile. The pipeline cannot start.")
+    
+
+##############################################################################
+# Reading input samples' table
+#############################################################################
+
+inputSamplesData = read_samplesTable(input_samples_table)
 
 ########################
 # Variables definition
@@ -42,10 +56,10 @@ def read_samplesTable(inputTable):
 
 # Splitting the table into single or paired end experiments
 
-index_single = samplesData['library_layout'] == 'SINGLE - '
-index_paired = samplesData['library_layout'] == 'PAIRED - '
-samplesData_single = samplesData[index_single]
-samplesData_paired = samplesData[index_paired]
+index_single = inputSamplesData['library_layout'] == 'SINGLE - '
+index_paired = inputSamplesData['library_layout'] == 'PAIRED - '
+samplesData_single = inputSamplesData[index_single]
+samplesData_paired = inputSamplesData[index_paired]
 
 # Output files names
 
@@ -60,9 +74,9 @@ PAIREDSAMPLES = samplesData_paired['SRR'].tolist()
 # Rules
 ###############################################################################
 
-# Defining singularity path
+# Defining singularity container to use 
 
-singularity: config["containers_folder"] + "epigenetic_pipeline_bismark_v0.2.sif"
+singularity: "/g/boulards/sformich/submissions_to_hpc/snakemake/containers/epigenetic_pipeline_bismark_v0.2.sif" 
 
 ######################
 # Rule all
@@ -72,7 +86,7 @@ singularity: config["containers_folder"] + "epigenetic_pipeline_bismark_v0.2.sif
 
 rule all:
   input:
-    expand("{path}qc/{sample}_fastqc.html", path=config["output_dir"], sample=SINGLESAMPLES),
+    expand("{path}qc/{sample}_fastqc.html", path=config["output_dir"], sample=SINGLESAMPLES)
 
 rule fastqc_my_fastq:
   input:
@@ -80,7 +94,7 @@ rule fastqc_my_fastq:
   params:
     output_dir=expand("{path}qc/", path=config["output_dir"])
   output:
-    expand("{path}qc/{sample}_fastqc.{ext}", path=config["output_dir"], ext=["html", "zip"])
+    expand("{path}qc/{sample}_fastqc.{ext}", path=config["output_dir"], sample=SINGLESAMPLES, ext=["html", "zip"])
   shell:
     "fastqc -o {params.output_dir} {input}"
 

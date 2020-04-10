@@ -1,0 +1,4 @@
+Building DAG of jobs...
+MissingInputException in line 91 of /g/boulard/sformich/submissions_to_hpc/snakemake/EMSeq/Snakefile:
+Missing input files for rule fastqc_my_fastq:
+/g/boulard/sformich/galaxy_transfer/EMSeq_test/fastq/SRR179668.fastq.gz
