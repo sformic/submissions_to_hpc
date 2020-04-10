@@ -1,3 +1,12 @@
+######################
+# Pipeline for analysis of EMSeq data
+# Author: Sara Formichetti
+# email: sara.formichetti@embl.it
+# run: all specified in shell wrapper 
+######################
+
+
+
 configfile : "/g/boulard/sformich/analyses/EMSeq_test/config.yaml"
 singularity : "docker://chronomics/epigenetic_pipeline_bismark:v0.2"
 
