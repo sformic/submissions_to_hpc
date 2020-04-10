@@ -1,38 +1,97 @@
 ######################
 # Pipeline for analysis of EMSeq data
+# Date: 10/04/20 (The COVID-19 pandemy historycal period!)
 # Author: Sara Formichetti
 # email: sara.formichetti@embl.it
-# run: all specified in shell wrapper 
+# run: all specified in shell wrapper for the specific experiment's analysis
 ######################
 
+#####################
+# Imports
+#####################
 
+import pandas
+import os
 
-configfile : "/g/boulard/sformich/analyses/EMSeq_test/config.yaml"
-singularity : "docker://chronomics/epigenetic_pipeline_bismark:v0.2"
+#####################
+# Defining shell to use
+#####################
+
+shell.executable("/bin/bash")
+
+#####################
+# Functions
+#####################
+
+## Defining experiment to be analysed
+
+experimemt = config["experiment_name"]
+
+def read_samplesTable(inputTable):
+    data = pandas.read_csv(inputTable)
+    # Verify column names
+    if not {'SRR','sample','biol_rep','tech_rep','run','library_layout','read_length'}.issubset(data.columns.values):
+            raise KeyError("The samples file must contain the following named columns: 'SRR','sample','biol_rep','tech_rep','run','library_layout','read_length'")
+    return data
+
+#ADD THIS TO THE RUN SNAKEMAKE COMMAND! configfile : "/g/boulard/sformich/analyses/EMSeq_test/config.yaml"
+
+########################
+# Variables definition
+########################
+
+# Splitting the table into single or paired end experiments
+
+index_single = samplesData['library_layout'] == 'SINGLE - '
+index_paired = samplesData['library_layout'] == 'PAIRED - '
+samplesData_single = samplesData[index_single]
+samplesData_paired = samplesData[index_paired]
+
+# Output files names
+
+SINGLESAMPLES = samplesData_single['SRR'].tolist()
+PAIREDSAMPLES = samplesData_paired['SRR'].tolist()
+
+# Define chromosomes names
+
+#CHROM = config["chr_list"]
+
+###############################################################################
+# Rules
+###############################################################################
+
+# Defining singularity path
+
+singularity: config["containers_folder"] + "epigenetic_pipeline_bismark_v0.2.sif"
+
+######################
+# Rule all
+######################
+
+#singularity : "docker://chronomics/epigenetic_pipeline_bismark:v0.2"
 
 rule all:
   input:
-    expand("{path}qc/{sample}_fastqc.html", path=config["output_dir"], sample=config["samples"]),
-    expand("{path}bam_files/{{fastq_name}}_maj_chr_picardreordered_duplrem.bam", path=config["output_dir"])
+    expand("{path}qc/{sample}_fastqc.html", path=config["output_dir"], sample=SINGLESAMPLES),
 
 rule fastqc_my_fastq:
   input:
-    expand("{path}{{fastq_name}}.gz", path=config["fastq_input_dir"])
+    expand("{path}{sample}.fastq.gz", path=config["fastq_input_dir"], sample=SINGLESAMPLES)
   params:
     output_dir=expand("{path}qc/", path=config["output_dir"])
   output:
-    expand("{path}qc/{{fastq_name}}_fastqc.{ext}", path=config["output_dir"], ext=["html", "zip"])
+    expand("{path}qc/{sample}_fastqc.{ext}", path=config["output_dir"], ext=["html", "zip"])
   shell:
     "fastqc -o {params.output_dir} {input}"
 
-rule trimgalore_my_fastq:
-  input:
-     expand("{path}{{fastq_name}}.gz", path=config["fastq_input_dir"])
-  output:
-    trimmed_fq=expand("{path}trimmed_reads/{{fastq_name}}_trimmed.fq.gz", path=config["output_dir"])
-  params:
-    output_dir=expand("{path}trimmed_reads/", path=config["output_dir"])
-  shell:
-    "trim_galore -q 20 --stringency 1 -e 0.1 --length 20 --fastqc --basename {wildcards.fastq_name} -o {params.output_dir} {input}"
+#rule trimgalore_my_fastq:
+#  input:
+#     expand("{path}{{fastq_name}}.gz", path=config["fastq_input_dir"])
+#  output:
+#    trimmed_fq=expand("{path}trimmed_reads/{{fastq_name}}_trimmed.fq.gz", path=config["output_dir"])
+#  params:
+#    output_dir=expand("{path}trimmed_reads/", path=config["output_dir"])
+#  shell:
+#    "trim_galore -q 20 --stringency 1 -e 0.1 --length 20 --fastqc --basename {wildcards.fastq_name} -o {params.output_dir} {input}"
 
 
