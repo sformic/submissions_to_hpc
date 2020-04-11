@@ -67,6 +67,14 @@ samplesData_paired = inputSamplesData[index_paired]
 SINGLESAMPLES = samplesData_single['SRR'].tolist()
 PAIREDSAMPLES = samplesData_paired['SRR'].tolist()
 
+# Finding corresponding input files, because they could have various extensions such as '.fastq', '.fastq.gz', ''
+
+from os import listdir
+from os.path import isfile, join
+onlyfiles = [f for f in listdir(config["fastq_input_dir"]) if isfile(join(config["fastq_input_dir"], f))]
+SINGLESAMPLES_FILES = [s for s in onlyfiles for p in SINGLESAMPLES if p in s]
+PAIREDSAMPLES_FILES = [s for s in onlyfiles for p in PAIREDSAMPLES if p in s]
+
 # Define chromosomes names
 
 #CHROM = config["chr_list"]
@@ -88,7 +96,7 @@ rule all:
 
 rule fastqc_my_fastq:
   input:
-    expand("{path}{sample}.fastq.gz", path=config["fastq_input_dir"], sample=SINGLESAMPLES)
+    expand("{path}{sample}", path=config["fastq_input_dir"], sample=SINGLESAMPLES_FILES)
   params:
     output_dir=expand("{path}qc/", path=config["output_dir"])
   output:
