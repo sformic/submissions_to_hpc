@@ -49,6 +49,7 @@ except KeyError:
 #############################################################################
 
 inputSamplesData = read_samplesTable(input_samples_table)
+print(inputSamplesData)
 
 ########################
 # Variables definition
@@ -75,14 +76,11 @@ PAIREDSAMPLES = samplesData_paired['SRR'].tolist()
 ###############################################################################
 
 # Defining singularity container to use 
-
-singularity: "/g/boulards/sformich/submissions_to_hpc/snakemake/containers/epigenetic_pipeline_bismark_v0.2.sif" 
+#singularity: config["containers_folder"] + ADD SIF IMAGE 
 
 ######################
 # Rule all
 ######################
-
-#singularity : "docker://chronomics/epigenetic_pipeline_bismark:v0.2"
 
 rule all:
   input:
@@ -95,6 +93,7 @@ rule fastqc_my_fastq:
     output_dir=expand("{path}qc/", path=config["output_dir"])
   output:
     expand("{path}qc/{sample}_fastqc.{ext}", path=config["output_dir"], sample=SINGLESAMPLES, ext=["html", "zip"])
+  conda: config["envs_folder"] + "EMSeq.yml" 
   shell:
     "fastqc -o {params.output_dir} {input}"
 
